@@ -1,0 +1,3 @@
+# Python deps for the one-time voice generation script (scripts/generate_intro.py)
+groq>=0.13.0
+python-dotenv>=1.0.1

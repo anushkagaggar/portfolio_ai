@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/*
+  Design system — "engineering blueprint"
+  Warm paper, charcoal ink, faint schematic lines, one disciplined indigo accent.
+  Type: Space Grotesk (display) / Inter (body) / JetBrains Mono (schematic labels).
+*/
+@theme {
+  --color-paper: #fafaf8;
+  --color-paper-2: #f3f2ee;
+  --color-ink: #161616;
+  --color-muted: #6b6b66;
+  --color-line: #dcdbd4;
+  --color-accent: #4f46e5;
+  --color-accent-soft: #eceafe;
+
+  --font-grotesk: var(--font-space-grotesk);
+  --font-sans: var(--font-inter-var);
+  --font-mono: var(--font-jetbrains);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-inter-var), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  /* sections sit clear of the fixed nav when jumped to */
+  section[id] {
+    scroll-margin-top: 72px;
+  }
+
+  /* visible keyboard focus — part of the quality floor */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* faint blueprint grid, used as a background utility */
+.blueprint-grid {
+  background-image:
+    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 30%, transparent 100%);
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
