@@ -6,16 +6,10 @@ import { FOUNDATION_PROJECTS } from "@/data/projects";
 export function Foundation() {
   return (
     <Section
-      id="foundation"
-      title="It starts with models."
-      intro="Before the platforms, the groundwork: classical ML, deep learning, computer vision, and NLP — built end to end, from preprocessing to deployment."
+      id="projects"
+      title="More projects."
+      intro="Hands-on builds across computer vision and time-series — from preprocessing to a working model."
     >
-      <div className="mb-10 flex flex-wrap gap-2">
-        {["ML", "Deep learning", "Computer vision", "NLP"].map((t) => (
-          <Chip key={t}>{t}</Chip>
-        ))}
-      </div>
-
       <Reveal stagger className="grid gap-5 md:grid-cols-2">
         {FOUNDATION_PROJECTS.map((p) => (
           <article

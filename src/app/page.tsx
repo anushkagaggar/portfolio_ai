@@ -1,10 +1,10 @@
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import { StickyNav } from "@/components/layout/StickyNav";
 import { Hero } from "@/components/hero/Hero";
-import { Foundation } from "@/components/scenes/Foundation";
-import { DataEngineering } from "@/components/scenes/DataEngineering";
 import { VaultAI } from "@/components/scenes/VaultAI";
-import { AISystems } from "@/components/scenes/AISystems";
+import { Experience } from "@/components/scenes/Experience";
+import { Foundation } from "@/components/scenes/Foundation";
+import { TechStack } from "@/components/scenes/TechStack";
 import { Contact } from "@/components/scenes/Contact";
 
 export default function Home() {
@@ -13,10 +13,10 @@ export default function Home() {
       <StickyNav />
       <main>
         <Hero />
-        <Foundation />
-        <DataEngineering />
         <VaultAI />
-        <AISystems />
+        <Experience />
+        <Foundation />
+        <TechStack />
         <Contact />
       </main>
     </SmoothScroll>

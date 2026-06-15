@@ -43,9 +43,9 @@ export type Scene = { id: string; label: string };
 // Order here defines the scroll journey and the nav.
 export const SCENES: Scene[] = [
   { id: "hero", label: "intro" },
-  { id: "foundation", label: "foundation" },
-  { id: "data-engineering", label: "data engineering" },
   { id: "vaultai", label: "vaultai" },
-  { id: "ai-systems", label: "systems" },
+  { id: "experience", label: "experience" },
+  { id: "projects", label: "projects" },
+  { id: "tech-stack", label: "tech" },
   { id: "contact", label: "contact" },
 ];
