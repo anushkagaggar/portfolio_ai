@@ -41,6 +41,8 @@ export function Foundation() {
               {p.link ? (
                 <a
                   href={p.link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 font-mono text-xs text-muted transition-colors hover:text-accent"
                 >
                   {p.link.label}

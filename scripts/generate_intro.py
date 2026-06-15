@@ -24,17 +24,8 @@ api_key = os.getenv("GROQ_API_KEY")
 if not api_key:
     raise SystemExit("GROQ_API_KEY not found. Add it to your .env file.")
 
-# This must match siteConfig.about.intro in src/config/site.ts so the spoken
-# voice and the on-screen typewriter say the same thing.
-SCRIPT = (
-    "I'm Anushka Maheshwari, an AI engineer who builds intelligent systems end "
-    "to end — from data pipelines to deployed, agentic GenAI platforms. I work "
-    "across machine learning, deep learning, NLP, and data engineering, turning "
-    "messy data into decisions people can act on. Most recently I built VaultAI, "
-    "a production financial-intelligence platform with retrieval-grounded answers "
-    "and a multi-agent core. I care about systems that are reliable, measurable, "
-    "and honest about their own confidence."
-)
+# Edit this line to taste — keep it to about two sentences.
+SCRIPT = "Hi, I'm Anushka Maheshwari. I engineer intelligent systems that turn data into decisions."
 
 OUTPUT = Path("public/audio/intro.mp3")
 OUTPUT.parent.mkdir(parents=True, exist_ok=True)

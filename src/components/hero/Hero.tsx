@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { NeuralField } from "@/components/hero/NeuralField";
+import { IntroAudio } from "@/components/hero/IntroAudio";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { siteConfig } from "@/config/site";
 
@@ -43,6 +44,7 @@ export function Hero() {
       <div className="blueprint-grid pointer-events-none absolute inset-0" />
       <NeuralField />
 
+      <IntroAudio />
 
       <div className="relative z-10 mx-auto w-full max-w-5xl">
         <h1
