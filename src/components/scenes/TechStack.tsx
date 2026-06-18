@@ -30,50 +30,11 @@ import {
 import { Section, Chip } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 
-// ── custom marks (inherit currentColor so they tint to ink / accent) ─────────
-function MatplotlibMark() {
-  return (
-    <svg viewBox="0 0 24 24" width={26} height={26} fill="none" aria-hidden="true">
-      <path
-        d="M4 3v15a2 2 0 0 0 2 2h15"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M7 15l3.2-4.2 3 2.6L20 6.5"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function LangGraphMark() {
-  return (
-    <svg viewBox="0 0 24 24" width={26} height={26} fill="none" aria-hidden="true">
-      <path
-        d="M7 6h10M7 6l1.5 11M17 6l-1.5 11M17 6l2 10"
-        stroke="currentColor"
-        strokeWidth={1.6}
-        strokeLinecap="round"
-      />
-      <circle cx="7" cy="6" r="2.4" fill="currentColor" />
-      <circle cx="17" cy="6" r="2.4" fill="currentColor" />
-      <circle cx="8.5" cy="18" r="2.4" fill="currentColor" />
-      <circle cx="19" cy="17" r="2.4" fill="currentColor" />
-    </svg>
-  );
-}
-
 type Tech = {
   name: string;
   Icon?: IconType;
+  img?: string;
   mono?: string;
-  Mark?: () => React.ReactElement;
   wordmark?: string;
 };
 
@@ -86,7 +47,7 @@ const ROWS: Tech[][] = [
     { name: "SQL", mono: "SQL" },
     { name: "NumPy", Icon: SiNumpy },
     { name: "Pandas", Icon: SiPandas },
-    { name: "Matplotlib", Mark: MatplotlibMark },
+    { name: "Matplotlib", img: "/images/matplotlib.png" },
     { name: "Keras", Icon: SiKeras },
     { name: "scikit-learn", Icon: SiScikitlearn },
     { name: "PyTorch", Icon: SiPytorch },
@@ -97,12 +58,12 @@ const ROWS: Tech[][] = [
     { name: "FastAPI", Icon: SiFastapi },
     { name: "Pydantic", Icon: SiPydantic },
     { name: "LangChain", Icon: SiLangchain },
-    { name: "LangGraph", Mark: LangGraphMark },
+    { name: "LangGraph", img: "/images/langgraph.png" },
     { name: "Ollama", Icon: SiOllama },
   ],
   [
     { name: "Groq", wordmark: "groq" },
-    { name: "Qdrant", mono: "QD" },
+    { name: "Qdrant", img: "/images/qdrant.png" },
     { name: "AWS", mono: "AWS" },
     { name: "GCP", Icon: SiGooglecloud },
     { name: "Vercel", Icon: SiVercel },
@@ -147,13 +108,18 @@ const CONCEPTS = [
 
 function Tile({ t }: { t: Tech }) {
   const Icon = t.Icon;
-  const Mark = t.Mark;
   return (
     <div className="group relative flex h-[84px] w-[84px] flex-col items-center justify-center gap-2 rounded-xl border border-line bg-paper text-ink transition duration-200 hover:-translate-y-1 hover:border-accent hover:text-accent hover:shadow-[0_10px_30px_-14px_rgba(79,70,229,0.55)]">
       {Icon ? (
         <Icon size={26} aria-hidden="true" />
-      ) : Mark ? (
-        <Mark />
+      ) : t.img ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={t.img}
+          alt=""
+          aria-hidden="true"
+          className="h-7 w-auto max-w-[52px] object-contain"
+        />
       ) : t.wordmark ? (
         <span className="font-grotesk text-xl font-bold lowercase tracking-tight">
           {t.wordmark}
