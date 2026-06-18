@@ -1,48 +1,92 @@
 import type { IconType } from "react-icons";
 import {
   SiPython,
-  SiTypescript,
-  SiNextdotjs,
-  SiLinux,
-  SiFastapi,
-  SiPydantic,
-  SiPytorch,
-  SiTensorflow,
-  SiKeras,
-  SiScikitlearn,
-  SiOpencv,
   SiNumpy,
   SiPandas,
+  SiKeras,
+  SiScikitlearn,
+  SiPytorch,
+  SiTensorflow,
+  SiOpencv,
+  SiFastapi,
+  SiPydantic,
   SiLangchain,
   SiOllama,
-  SiHuggingface,
-  SiApacheairflow,
-  SiDocker,
-  SiGit,
-  SiGithub,
-  SiGitlab,
+  SiGooglecloud,
   SiVercel,
+  SiHuggingface,
+  SiDocker,
   SiMlflow,
   SiPrometheus,
   SiGrafana,
-  SiGooglecloud,
+  SiGit,
+  SiGithub,
+  SiGitlab,
+  SiApacheairflow,
+  SiNextdotjs,
+  SiTypescript,
+  SiLinux,
 } from "react-icons/si";
 import { Section, Chip } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 
-type Tech = { name: string; Icon?: IconType; mono?: string };
+// ── custom marks (inherit currentColor so they tint to ink / accent) ─────────
+function MatplotlibMark() {
+  return (
+    <svg viewBox="0 0 24 24" width={26} height={26} fill="none" aria-hidden="true">
+      <path
+        d="M4 3v15a2 2 0 0 0 2 2h15"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7 15l3.2-4.2 3 2.6L20 6.5"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
-// Inverted triangle (widest row on top, narrowing to the point), filled in the
-// requested priority order: languages → libraries → backend → LLM frameworks →
-// GenAI/vector → cloud → deployment → version control → data engineering →
-// frontend last. Tiles without a brand logo get a clean monogram.
+function LangGraphMark() {
+  return (
+    <svg viewBox="0 0 24 24" width={26} height={26} fill="none" aria-hidden="true">
+      <path
+        d="M7 6h10M7 6l1.5 11M17 6l-1.5 11M17 6l2 10"
+        stroke="currentColor"
+        strokeWidth={1.6}
+        strokeLinecap="round"
+      />
+      <circle cx="7" cy="6" r="2.4" fill="currentColor" />
+      <circle cx="17" cy="6" r="2.4" fill="currentColor" />
+      <circle cx="8.5" cy="18" r="2.4" fill="currentColor" />
+      <circle cx="19" cy="17" r="2.4" fill="currentColor" />
+    </svg>
+  );
+}
+
+type Tech = {
+  name: string;
+  Icon?: IconType;
+  mono?: string;
+  Mark?: () => React.ReactElement;
+  wordmark?: string;
+};
+
+// Inverted triangle (widest row on top, narrowing down) in the requested order:
+// languages → libraries → backend → LLM frameworks → GenAI/vector → cloud →
+// deployment → MLOps → version control → data engineering → frontend last.
 const ROWS: Tech[][] = [
   [
     { name: "Python", Icon: SiPython },
     { name: "SQL", mono: "SQL" },
     { name: "NumPy", Icon: SiNumpy },
     { name: "Pandas", Icon: SiPandas },
-    { name: "Matplotlib", mono: "MPL" },
+    { name: "Matplotlib", Mark: MatplotlibMark },
     { name: "Keras", Icon: SiKeras },
     { name: "scikit-learn", Icon: SiScikitlearn },
     { name: "PyTorch", Icon: SiPytorch },
@@ -53,33 +97,28 @@ const ROWS: Tech[][] = [
     { name: "FastAPI", Icon: SiFastapi },
     { name: "Pydantic", Icon: SiPydantic },
     { name: "LangChain", Icon: SiLangchain },
-    { name: "LangGraph", mono: "LG" },
+    { name: "LangGraph", Mark: LangGraphMark },
     { name: "Ollama", Icon: SiOllama },
   ],
   [
-    { name: "Groq", mono: "GQ" },
+    { name: "Groq", wordmark: "groq" },
     { name: "Qdrant", mono: "QD" },
-    { name: "Sentence Transformers", mono: "ST" },
     { name: "AWS", mono: "AWS" },
     { name: "GCP", Icon: SiGooglecloud },
     { name: "Vercel", Icon: SiVercel },
+    { name: "Hugging Face", Icon: SiHuggingface },
   ],
   [
-    { name: "Hugging Face", Icon: SiHuggingface },
     { name: "Docker", Icon: SiDocker },
     { name: "MLflow", Icon: SiMlflow },
     { name: "Prometheus", Icon: SiPrometheus },
     { name: "Grafana", Icon: SiGrafana },
+    { name: "Git", Icon: SiGit },
   ],
   [
-    { name: "Alembic", mono: "AL" },
-    { name: "Git", Icon: SiGit },
     { name: "GitHub", Icon: SiGithub },
     { name: "GitLab", Icon: SiGitlab },
-  ],
-  [
     { name: "Apache Airflow", Icon: SiApacheairflow },
-    { name: "Iceberg", mono: "IB" },
     { name: "Next.js", Icon: SiNextdotjs },
   ],
   [
@@ -88,7 +127,6 @@ const ROWS: Tech[][] = [
   ],
 ];
 
-// Methods & concepts from the resume that aren't "logo" tiles.
 const CONCEPTS = [
   "ML",
   "Deep Learning",
@@ -109,10 +147,17 @@ const CONCEPTS = [
 
 function Tile({ t }: { t: Tech }) {
   const Icon = t.Icon;
+  const Mark = t.Mark;
   return (
     <div className="group relative flex h-[84px] w-[84px] flex-col items-center justify-center gap-2 rounded-xl border border-line bg-paper text-ink transition duration-200 hover:-translate-y-1 hover:border-accent hover:text-accent hover:shadow-[0_10px_30px_-14px_rgba(79,70,229,0.55)]">
       {Icon ? (
         <Icon size={26} aria-hidden="true" />
+      ) : Mark ? (
+        <Mark />
+      ) : t.wordmark ? (
+        <span className="font-grotesk text-xl font-bold lowercase tracking-tight">
+          {t.wordmark}
+        </span>
       ) : (
         <span className="font-grotesk text-base font-semibold">{t.mono}</span>
       )}
@@ -143,7 +188,6 @@ export function TechStack() {
         ))}
       </Reveal>
 
-      {/* methods & concepts, so nothing from the resume is left out */}
       <Reveal className="mx-auto mt-12 max-w-3xl border-t border-line pt-8">
         <p className="mb-4 text-center font-mono text-xs uppercase tracking-widest text-muted">
           methods &amp; concepts
