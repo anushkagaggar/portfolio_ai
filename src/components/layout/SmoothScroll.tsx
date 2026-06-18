@@ -9,10 +9,9 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Wraps the page in Lenis smooth scrolling and wires it into GSAP's ticker
- * so ScrollTrigger stays in sync. Exposes the instance on window.__lenis so
- * the nav can do offset-aware anchor jumps. Skips smoothing entirely when the
- * visitor prefers reduced motion (native scroll takes over).
+ * Lenis smooth scrolling wired into GSAP's ticker so ScrollTrigger stays in
+ * sync. Also refreshes ScrollTrigger after fonts/late layout settle, so reveal
+ * triggers don't use stale positions. Skips smoothing under reduced motion.
  */
 export default function SmoothScroll({
   children,
@@ -30,17 +29,26 @@ export default function SmoothScroll({
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
 
-    // make the instance reachable for anchor navigation
     (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
-
     lenis.on("scroll", ScrollTrigger.update);
 
     const onTick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(onTick);
     gsap.ticker.lagSmoothing(0);
 
+    // Late layout shifts (web fonts swapping in, the hero canvas sizing) move
+    // section positions after triggers are created — recompute them.
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    if (document.fonts?.ready) document.fonts.ready.then(refresh);
+    const t1 = window.setTimeout(refresh, 400);
+    const t2 = window.setTimeout(refresh, 1200);
+
     return () => {
       gsap.ticker.remove(onTick);
+      window.removeEventListener("load", refresh);
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
       lenis.destroy();
       delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };

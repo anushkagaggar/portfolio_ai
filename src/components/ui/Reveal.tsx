@@ -21,7 +21,9 @@ type RevealProps = {
 
 /**
  * Fades + rises its content as it enters the viewport. Under reduced motion it
- * renders fully visible immediately — no transforms, no opacity tricks.
+ * renders fully visible immediately. A safety net forces content visible if a
+ * section is already on screen but the trigger somehow hasn't fired — content
+ * is never left stuck hidden.
  */
 export function Reveal({
   children,
@@ -40,19 +42,35 @@ export function Reveal({
         ? (Array.from(ref.current.children) as HTMLElement[])
         : ref.current;
 
-      gsap.from(targets, {
-        opacity: 0,
-        y: 28,
-        duration: 0.8,
-        delay,
-        ease: "power3.out",
-        stagger: stagger ? staggerAmount : 0,
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top 85%",
-          once: true,
-        },
-      });
+      const tween = gsap.fromTo(
+        targets,
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay,
+          ease: "power3.out",
+          stagger: stagger ? staggerAmount : 0,
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top 85%",
+            once: true,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
+
+      const fallback = window.setTimeout(() => {
+        if (!ref.current) return;
+        const top = ref.current.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.95 && tween.progress() === 0) {
+          tween.scrollTrigger?.kill();
+          gsap.set(targets, { opacity: 1, y: 0 });
+        }
+      }, 1500);
+
+      return () => window.clearTimeout(fallback);
     },
     { dependencies: [reduced], scope: ref }
   );
