@@ -33,7 +33,7 @@ import { Reveal } from "@/components/ui/Reveal";
 type Tech = {
   name: string;
   Icon?: IconType;
-  img?: string;
+  mask?: string;
   mono?: string;
   wordmark?: string;
 };
@@ -47,7 +47,7 @@ const ROWS: Tech[][] = [
     { name: "SQL", mono: "SQL" },
     { name: "NumPy", Icon: SiNumpy },
     { name: "Pandas", Icon: SiPandas },
-    { name: "Matplotlib", img: "/images/matplotlib.png" },
+    { name: "Matplotlib", mask: "/images/matplotlib.png" },
     { name: "Keras", Icon: SiKeras },
     { name: "scikit-learn", Icon: SiScikitlearn },
     { name: "PyTorch", Icon: SiPytorch },
@@ -58,12 +58,12 @@ const ROWS: Tech[][] = [
     { name: "FastAPI", Icon: SiFastapi },
     { name: "Pydantic", Icon: SiPydantic },
     { name: "LangChain", Icon: SiLangchain },
-    { name: "LangGraph", img: "/images/langgraph.png" },
+    { name: "LangGraph", mask: "/images/langgraph.png" },
     { name: "Ollama", Icon: SiOllama },
   ],
   [
     { name: "Groq", wordmark: "groq" },
-    { name: "Qdrant", img: "/images/qdrant.png" },
+    { name: "Qdrant", mask: "/images/qdrant.png" },
     { name: "AWS", mono: "AWS" },
     { name: "GCP", Icon: SiGooglecloud },
     { name: "Vercel", Icon: SiVercel },
@@ -112,13 +112,22 @@ function Tile({ t }: { t: Tech }) {
     <div className="group relative flex h-[84px] w-[84px] flex-col items-center justify-center gap-2 rounded-xl border border-line bg-paper text-ink transition duration-200 hover:-translate-y-1 hover:border-accent hover:text-accent hover:shadow-[0_10px_30px_-14px_rgba(79,70,229,0.55)]">
       {Icon ? (
         <Icon size={26} aria-hidden="true" />
-      ) : t.img ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={t.img}
-          alt=""
+      ) : t.mask ? (
+        <span
           aria-hidden="true"
-          className="h-7 w-auto max-w-[52px] object-contain"
+          className="bg-ink transition-colors duration-200 group-hover:bg-accent"
+          style={{
+            width: 40,
+            height: 26,
+            WebkitMaskImage: `url(${t.mask})`,
+            maskImage: `url(${t.mask})`,
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+            maskPosition: "center",
+            WebkitMaskSize: "contain",
+            maskSize: "contain",
+          }}
         />
       ) : t.wordmark ? (
         <span className="font-grotesk text-xl font-bold lowercase tracking-tight">
