@@ -15,6 +15,8 @@ type RevealProps = {
   delay?: number;
   /** when true, direct children animate one after another */
   stagger?: boolean;
+  /** seconds between staggered children */
+  staggerAmount?: number;
 };
 
 /**
@@ -26,6 +28,7 @@ export function Reveal({
   className,
   delay = 0,
   stagger = false,
+  staggerAmount = 0.08,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -43,7 +46,7 @@ export function Reveal({
         duration: 0.8,
         delay,
         ease: "power3.out",
-        stagger: stagger ? 0.08 : 0,
+        stagger: stagger ? staggerAmount : 0,
         scrollTrigger: {
           trigger: ref.current,
           start: "top 85%",
