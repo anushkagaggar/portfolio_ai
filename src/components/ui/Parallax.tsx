@@ -1,40 +1,34 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 type ParallaxProps = {
   children: React.ReactNode;
   className?: string;
-  /** vertical travel in px, scrubbed to scroll (positive = drifts upward as you scroll) */
+  /** vertical travel in px, scrubbed to scroll */
   distance?: number;
 };
 
-/**
- * Continuously drifts its content as the page scrolls (scrubbed, so it moves
- * in lockstep with the scroll position). This is what makes sections feel
- * alive while scrolling, on top of the one-shot Reveal entrances.
- */
-export function Parallax({ children, className, distance = 48 }: ParallaxProps) {
+/** Continuously drifts its content in lockstep with the scroll position. */
+export function Parallax({ children, className, distance = 44 }: ParallaxProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
 
-  useGSAP(
-    () => {
-      if (reduced || !ref.current) return;
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const ctx = gsap.context(() => {
       gsap.fromTo(
-        ref.current,
+        node,
         { y: distance },
         {
           y: -distance,
           ease: "none",
           scrollTrigger: {
-            trigger: ref.current,
+            trigger: node,
             start: "top bottom",
             end: "bottom top",
             scrub: true,
@@ -42,9 +36,9 @@ export function Parallax({ children, className, distance = 48 }: ParallaxProps) 
           },
         }
       );
-    },
-    { dependencies: [reduced], scope: ref }
-  );
+    }, node);
+    return () => ctx.revert();
+  }, [distance]);
 
   return (
     <div ref={ref} className={className}>

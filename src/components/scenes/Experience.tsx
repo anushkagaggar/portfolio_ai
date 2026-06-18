@@ -1,89 +1,67 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import { Section, Chip } from "@/components/ui/Section";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { EXPERIENCE, EDUCATION } from "@/data/experience";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 type Milestone = {
-  period: string;
-  title: string;
-  org: string;
-  location?: string;
-  points: string[];
-  tech?: string[];
-  highlight?: string;
+  period: string; title: string; org: string; location?: string;
+  points: string[]; tech?: string[]; highlight?: string;
 };
 
 const TECH_BY_ORG: Record<string, string[]> = {
   "Drona Pay": ["Apache Airflow", "Trino", "Iceberg", "SQL"],
   "IBM SkillsBuild": ["Python", "pandas", "NumPy", "scikit-learn"],
 };
-const HIGHLIGHT_BY_ORG: Record<string, string> = {
-  "Drona Pay": "−50% storage",
-};
+const HIGHLIGHT_BY_ORG: Record<string, string> = { "Drona Pay": "−50% storage" };
 
-// Build the road oldest → newest: education, then internships in time order.
 const MILESTONES: Milestone[] = [
   {
-    period: EDUCATION.period,
-    title: EDUCATION.degree,
-    org: EDUCATION.school,
+    period: EDUCATION.period, title: EDUCATION.degree, org: EDUCATION.school,
     points: [`Graduated with ${EDUCATION.grade}.`],
   },
   ...[...EXPERIENCE].reverse().map((r) => ({
-    period: r.period,
-    title: r.title,
-    org: r.org,
-    location: r.location,
-    points: r.points,
-    tech: TECH_BY_ORG[r.org],
-    highlight: HIGHLIGHT_BY_ORG[r.org],
+    period: r.period, title: r.title, org: r.org, location: r.location,
+    points: r.points, tech: TECH_BY_ORG[r.org], highlight: HIGHLIGHT_BY_ORG[r.org],
   })),
 ];
 
 export function Experience() {
   const trackRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
-  const reduced = useReducedMotion();
 
-  useGSAP(
-    () => {
-      if (reduced || !trackRef.current || !progressRef.current) return;
+  useEffect(() => {
+    const track = trackRef.current;
+    const progress = progressRef.current;
+    if (!track || !progress) return;
 
-      // the accent "road" fills as you scroll through the section
+    const ctx = gsap.context(() => {
       gsap.fromTo(
-        progressRef.current,
+        progress,
         { scaleY: 0 },
         {
-          scaleY: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: trackRef.current,
-            start: "top 65%",
-            end: "bottom 75%",
-            scrub: true,
-          },
+          scaleY: 1, ease: "none",
+          scrollTrigger: { trigger: track, start: "top 65%", end: "bottom 75%", scrub: true, invalidateOnRefresh: true },
         }
       );
-
-      // milestones rise in
       gsap.from("[data-milestone]", {
-        opacity: 0,
-        y: 28,
-        duration: 0.7,
-        ease: "power3.out",
-        stagger: 0.12,
-        scrollTrigger: { trigger: trackRef.current, start: "top 70%", once: true },
+        opacity: 0, y: 30, duration: 0.7, ease: "power3.out", stagger: 0.14,
+        scrollTrigger: { trigger: track, start: "top 75%", once: true, invalidateOnRefresh: true },
       });
-    },
-    { dependencies: [reduced], scope: trackRef }
-  );
+    }, track);
+
+    const fb = window.setTimeout(() => {
+      if (track.getBoundingClientRect().top < window.innerHeight) {
+        gsap.set("[data-milestone]", { opacity: 1, y: 0 });
+      }
+    }, 1600);
+
+    return () => { window.clearTimeout(fb); ctx.revert(); };
+  }, []);
 
   return (
     <Section
@@ -92,57 +70,34 @@ export function Experience() {
       intro="From an AI & ML degree into shipping production data systems — each stop built on the last."
     >
       <div ref={trackRef} className="relative">
-        {/* base rail */}
         <span className="absolute left-[14px] top-2 bottom-2 w-px bg-line" aria-hidden="true" />
-        {/* accent progress rail */}
-        <span
-          ref={progressRef}
-          className="absolute left-[14px] top-2 bottom-2 w-px origin-top bg-accent"
-          aria-hidden="true"
-        />
+        <span ref={progressRef} className="absolute left-[14px] top-2 bottom-2 w-px origin-top bg-accent" aria-hidden="true" />
 
         <div className="relative flex flex-col gap-10">
           {MILESTONES.map((m, i) => (
-            <div
-              key={i}
-              data-milestone
-              className="grid grid-cols-[28px_1fr] gap-5"
-            >
+            <div key={i} data-milestone className="grid grid-cols-[28px_1fr] gap-5">
               <div className="relative flex justify-center pt-1.5">
                 <span className="relative z-10 h-3.5 w-3.5 rounded-full border-2 border-accent bg-paper" />
               </div>
-
               <article className="rounded-xl border border-line bg-paper p-6">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                  <p className="font-mono text-xs uppercase tracking-widest text-accent">
-                    {m.period}
-                  </p>
+                  <p className="font-mono text-xs uppercase tracking-widest text-accent">{m.period}</p>
                   {m.highlight ? (
-                    <span className="rounded-md bg-accent-soft px-2.5 py-1 font-mono text-xs text-accent">
-                      {m.highlight}
-                    </span>
+                    <span className="rounded-md bg-accent-soft px-2.5 py-1 font-mono text-xs text-accent">{m.highlight}</span>
                   ) : null}
                 </div>
-                <h3 className="mt-2 font-grotesk text-xl font-medium text-ink">
-                  {m.title}
-                </h3>
-                <p className="text-sm text-muted">
-                  {m.org}
-                  {m.location ? ` · ${m.location}` : ""}
-                </p>
+                <h3 className="mt-2 font-grotesk text-xl font-medium text-ink">{m.title}</h3>
+                <p className="text-sm text-muted">{m.org}{m.location ? ` · ${m.location}` : ""}</p>
                 <ul className="mt-4 space-y-2 text-sm leading-relaxed text-ink/80">
                   {m.points.map((pt) => (
                     <li key={pt} className="flex gap-2">
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
-                      {pt}
+                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />{pt}
                     </li>
                   ))}
                 </ul>
                 {m.tech && m.tech.length ? (
                   <div className="mt-5 flex flex-wrap gap-1.5">
-                    {m.tech.map((t) => (
-                      <Chip key={t}>{t}</Chip>
-                    ))}
+                    {m.tech.map((t) => <Chip key={t}>{t}</Chip>)}
                   </div>
                 ) : null}
               </article>

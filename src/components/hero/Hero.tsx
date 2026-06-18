@@ -1,25 +1,21 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import { NeuralField } from "@/components/hero/NeuralField";
 import { IntroAudio } from "@/components/hero/IntroAudio";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { siteConfig } from "@/config/site";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
 
-  useGSAP(
-    () => {
-      if (reduced || !ref.current) return;
-
-      // intro: name + tagline rise out of a blur into focus
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.from("[data-hero='name']", {
         opacity: 0,
@@ -33,31 +29,20 @@ export function Hero() {
         "-=0.8"
       );
 
-      // scroll parallax: content lifts + fades, network drifts the other way
       gsap.to("[data-hero='content']", {
-        y: -140,
+        y: -160,
         opacity: 0,
         ease: "none",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
+        scrollTrigger: { trigger: node, start: "top top", end: "bottom top", scrub: true },
       });
       gsap.to("[data-hero='field']", {
-        y: 120,
+        y: 140,
         ease: "none",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
+        scrollTrigger: { trigger: node, start: "top top", end: "bottom top", scrub: true },
       });
-    },
-    { dependencies: [reduced], scope: ref }
-  );
+    }, node);
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section

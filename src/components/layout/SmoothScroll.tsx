@@ -4,27 +4,18 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * Lenis smooth scrolling wired into GSAP's ticker so ScrollTrigger stays in
- * sync. Also refreshes ScrollTrigger after fonts/late layout settle, so reveal
- * triggers don't use stale positions. Skips smoothing under reduced motion.
- */
+/** Lenis smooth scrolling wired into GSAP's ticker + ScrollTrigger. */
 export default function SmoothScroll({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const reduced = useReducedMotion();
-
   useEffect(() => {
-    if (reduced) return;
-
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.15,
       smoothWheel: true,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
@@ -36,8 +27,6 @@ export default function SmoothScroll({
     gsap.ticker.add(onTick);
     gsap.ticker.lagSmoothing(0);
 
-    // Late layout shifts (web fonts swapping in, the hero canvas sizing) move
-    // section positions after triggers are created — recompute them.
     const refresh = () => ScrollTrigger.refresh();
     window.addEventListener("load", refresh);
     if (document.fonts?.ready) document.fonts.ready.then(refresh);
@@ -52,7 +41,7 @@ export default function SmoothScroll({
       lenis.destroy();
       delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
-  }, [reduced]);
+  }, []);
 
   return <>{children}</>;
 }
