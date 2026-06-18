@@ -27,6 +27,8 @@ export const siteConfig = {
       "https://drive.google.com/drive/folders/1OYkb0HsqfWrwHNHcZmkeArf2zsScd-rS?usp=sharing",
     stockPrediction:
       "https://colab.research.google.com/drive/1OUsREtmrP-JYkY1W2qPaQsTi1bl8e8hn?usp=sharing",
+    // tapping the phone opens a WhatsApp chat (country code + number, no +/spaces)
+    whatsapp: "https://wa.me/919462877942",
   },
 
   intro: {
@@ -34,7 +36,10 @@ export const siteConfig = {
     // only plays this file — it never calls an API.
     audioUrl: "/audio/intro.mp3",
     // How long after load before the voice attempts to play.
-    autoplayDelayMs: 2000,
+    autoplayDelayMs: 1500,
+    // What the browser voice says if the mp3 file isn't present yet.
+    spokenText:
+      "Hi, I'm Anushka Maheshwari. I engineer intelligent systems that turn data into decisions.",
   },
 } as const;
 

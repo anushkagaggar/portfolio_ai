@@ -1,4 +1,4 @@
-import { Reveal } from "@/components/ui/Reveal";
+import { Parallax } from "@/components/ui/Parallax";
 
 /** Small pill for a skill / tech tag */
 export function Chip({ children }: { children: React.ReactNode }) {
@@ -16,14 +16,14 @@ type SectionProps = {
   children: React.ReactNode;
 };
 
-/** Consistent section frame: title → intro → content. No visible numbering. */
+/** Consistent section frame: title → intro → content. Heading drifts on scroll. */
 export function Section({ id, title, intro, children }: SectionProps) {
   return (
     <section
       id={id}
       className="mx-auto flex min-h-screen max-w-5xl flex-col justify-center px-6 py-28 md:px-10"
     >
-      <Reveal>
+      <Parallax distance={36}>
         <h2 className="max-w-3xl font-grotesk text-3xl font-medium leading-tight tracking-tight text-ink md:text-5xl">
           {title}
         </h2>
@@ -32,7 +32,7 @@ export function Section({ id, title, intro, children }: SectionProps) {
             {intro}
           </p>
         ) : null}
-      </Reveal>
+      </Parallax>
       <div className="mt-12">{children}</div>
     </section>
   );

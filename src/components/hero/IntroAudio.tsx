@@ -3,40 +3,79 @@
 import { useEffect } from "react";
 import { siteConfig } from "@/config/site";
 
+// Prefer a female English voice for the browser-speech fallback.
+function pickFemaleVoice(voices: SpeechSynthesisVoice[]) {
+  const en = voices.filter((v) => /^en/i.test(v.lang));
+  const pool = en.length ? en : voices;
+  const prefer = [
+    /female/i,
+    /samantha/i,
+    /victoria/i,
+    /karen/i,
+    /tessa/i,
+    /moira/i,
+    /fiona/i,
+    /zira/i,
+    /aria/i,
+    /jenny/i,
+    /libby/i,
+    /sonia/i,
+    /google uk english female/i,
+    /google us english/i,
+  ];
+  for (const re of prefer) {
+    const v = pool.find((x) => re.test(x.name));
+    if (v) return v;
+  }
+  return pool[0];
+}
+
 /**
- * Plays the intro voice automatically, a couple of seconds after load.
- *
- * Two layers:
- *  1) If public/audio/intro.mp3 exists (generated via scripts/generate_intro.py),
- *     it plays that high-quality file.
- *  2) If the file is missing OR autoplay is blocked, it falls back to the
- *     browser's built-in speech synthesis speaking the tagline — so the voice
- *     is never silent, even with zero setup.
- *
- * Browsers block sound until the visitor interacts with the page, so when the
- * first attempt is blocked we wait for the first gesture (mouse move, scroll,
- * tap, key) and then play. No visible UI.
+ * Plays the intro voice. If public/audio/intro.mp3 exists (generated via
+ * scripts/generate_intro.py) it plays that. If not, it falls back to the
+ * browser's speech synthesis using a female voice. Browsers block sound until
+ * the visitor interacts, so it tries shortly after load and otherwise fires on
+ * the first interaction — reliably, on every reload.
  */
 export function IntroAudio() {
   useEffect(() => {
     const audio = new Audio(siteConfig.intro.audioUrl);
     audio.preload = "auto";
     let done = false;
-    let interacted = false;
 
     const speak = () => {
-      if (done) return;
       const synth = window.speechSynthesis;
       if (!synth) return;
-      const u = new SpeechSynthesisUtterance(siteConfig.tagline);
-      u.rate = 1;
-      u.pitch = 1;
-      synth.cancel();
-      synth.speak(u);
-      done = true;
+      const utter = () => {
+        const u = new SpeechSynthesisUtterance(siteConfig.intro.spokenText);
+        const v = pickFemaleVoice(synth.getVoices());
+        if (v) u.voice = v;
+        u.rate = 1;
+        u.pitch = 1.05;
+        synth.cancel();
+        synth.speak(u);
+      };
+      if (synth.getVoices().length) {
+        utter();
+      } else {
+        const onVoices = () => {
+          synth.removeEventListener("voiceschanged", onVoices);
+          utter();
+        };
+        synth.addEventListener("voiceschanged", onVoices);
+        window.setTimeout(utter, 300); // safety if the event never fires
+      }
     };
 
-    const tryPlay = () => {
+    // play the mp3, or speak as a fallback
+    const start = () => {
+      if (done) return;
+      done = true;
+      audio.play().catch(() => speak());
+    };
+
+    // optimistic attempt after load (works only if the browser allows it)
+    const timer = window.setTimeout(() => {
       if (done) return;
       audio
         .play()
@@ -44,41 +83,28 @@ export function IntroAudio() {
           done = true;
         })
         .catch(() => {
-          // mp3 missing or playback failed — use browser speech if we may
-          if (interacted) speak();
+          /* blocked — the first interaction below will start it */
         });
-    };
+    }, siteConfig.intro.autoplayDelayMs);
 
-    const gestures: (keyof WindowEventMap)[] = [
+    // first interaction guarantees playback on every load/reload
+    const events: (keyof WindowEventMap)[] = [
       "pointerdown",
       "keydown",
       "wheel",
       "touchstart",
+      "scroll",
       "mousemove",
     ];
-    const cleanup = () =>
-      gestures.forEach((g) => window.removeEventListener(g, onGesture));
-    function onGesture() {
-      interacted = true;
-      tryPlay();
+    const onInteract = () => {
+      start();
       cleanup();
-    }
-    const arm = () =>
-      gestures.forEach((g) =>
-        window.addEventListener(g, onGesture, { passive: true })
-      );
-
-    const timer = window.setTimeout(() => {
-      audio
-        .play()
-        .then(() => {
-          done = true;
-        })
-        .catch(() => {
-          // blocked or missing — wait for the first interaction, then retry
-          arm();
-        });
-    }, siteConfig.intro.autoplayDelayMs);
+    };
+    const cleanup = () =>
+      events.forEach((e) => window.removeEventListener(e, onInteract));
+    events.forEach((e) =>
+      window.addEventListener(e, onInteract, { passive: true })
+    );
 
     return () => {
       window.clearTimeout(timer);

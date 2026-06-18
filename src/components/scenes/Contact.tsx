@@ -1,14 +1,14 @@
 import { Reveal } from "@/components/ui/Reveal";
-import { Github, Linkedin, Mail, Phone, FileText, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, Mail, FileText, ArrowUpRight } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 import { siteConfig } from "@/config/site";
-import { EDUCATION } from "@/data/experience";
 
 export function Contact() {
   const links = [
     { label: "GitHub", href: siteConfig.links.github, icon: <Github size={16} />, ext: true },
     { label: "LinkedIn", href: siteConfig.links.linkedin, icon: <Linkedin size={16} />, ext: true },
     { label: "Email", href: `mailto:${siteConfig.email}`, icon: <Mail size={16} />, ext: false },
-    { label: "Phone", href: `tel:${siteConfig.phone.replace(/\s+/g, "")}`, icon: <Phone size={16} />, ext: false },
+    { label: "WhatsApp", href: siteConfig.links.whatsapp, icon: <SiWhatsapp size={16} />, ext: true },
     { label: "Resume", href: siteConfig.links.resume, icon: <FileText size={16} />, ext: true },
   ];
 
@@ -48,18 +48,6 @@ export function Contact() {
             />
           </a>
         ))}
-      </Reveal>
-
-      <Reveal className="mt-12 border-t border-line pt-6">
-        <div className="flex flex-col gap-1">
-          <p className="font-grotesk text-sm font-medium text-ink">{EDUCATION.school}</p>
-          <p className="text-sm text-muted">
-            {EDUCATION.degree} · {EDUCATION.grade} · {EDUCATION.period}
-          </p>
-        </div>
-        <p className="mt-8 font-mono text-xs text-muted">
-          © {new Date().getFullYear()} {siteConfig.name} — built with Next.js, GSAP &amp; Lenis.
-        </p>
       </Reveal>
     </section>
   );
