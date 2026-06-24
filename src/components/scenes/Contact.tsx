@@ -1,15 +1,20 @@
 import { Reveal } from "@/components/ui/Reveal";
-import { Github, Linkedin, Mail, FileText, ArrowUpRight } from "lucide-react";
-import { SiWhatsapp } from "react-icons/si";
+import { FileText } from "lucide-react";
+import { SiGmail, SiGithub } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa6";
 import { siteConfig } from "@/config/site";
 
 export function Contact() {
-  const links = [
-    { label: "GitHub", href: siteConfig.links.github, icon: <Github size={16} />, ext: true },
-    { label: "LinkedIn", href: siteConfig.links.linkedin, icon: <Linkedin size={16} />, ext: true },
-    { label: "Email", href: `mailto:${siteConfig.email}`, icon: <Mail size={16} />, ext: false },
-    { label: "WhatsApp", href: siteConfig.links.whatsapp, icon: <SiWhatsapp size={16} />, ext: true },
-    { label: "Resume", href: siteConfig.links.resume, icon: <FileText size={16} />, ext: true },
+  // Opens a Gmail compose window addressed to me (works without a desktop mail client).
+  const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+    siteConfig.email
+  )}`;
+
+  const tabs = [
+    { label: "Gmail", href: gmailCompose, icon: <SiGmail size={22} />, hover: "#EA4335" },
+    { label: "LinkedIn", href: siteConfig.links.linkedin, icon: <FaLinkedin size={22} />, hover: "#0A66C2" },
+    { label: "GitHub", href: siteConfig.links.github, icon: <SiGithub size={22} />, hover: "#181717" },
+    { label: "Resume", href: siteConfig.links.resume, icon: <FileText size={21} />, hover: "#4F46E5" },
   ];
 
   return (
@@ -26,26 +31,23 @@ export function Contact() {
         </p>
       </Reveal>
 
-      <Reveal stagger className="mt-10 grid gap-3 sm:grid-cols-2">
-        {links.map((l) => (
+      <Reveal stagger className="mt-12 flex flex-wrap gap-7">
+        {tabs.map((t) => (
           <a
-            key={l.label}
-            href={l.href}
-            target={l.ext ? "_blank" : undefined}
-            rel={l.ext ? "noopener noreferrer" : undefined}
-            className="group flex items-center justify-between rounded-xl border border-line bg-paper px-5 py-4 transition-colors hover:border-accent"
+            key={t.label}
+            href={t.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t.label}
+            style={{ ["--brand" as string]: t.hover } as React.CSSProperties}
+            className="group flex flex-col items-center gap-2.5"
           >
-            <span className="flex items-center gap-3">
-              <span className="grid h-9 w-9 place-items-center rounded-lg bg-paper-2 text-ink transition-colors group-hover:text-accent">
-                {l.icon}
-              </span>
-              <span className="font-grotesk text-base font-medium text-ink">{l.label}</span>
+            <span className="grid h-16 w-16 place-items-center rounded-full border border-line bg-paper text-ink transition duration-200 group-hover:-translate-y-1 group-hover:border-[var(--brand)] group-hover:text-[var(--brand)] group-hover:shadow-[0_12px_30px_-14px_var(--brand)]">
+              {t.icon}
             </span>
-            <ArrowUpRight
-              size={16}
-              className="text-muted transition-colors group-hover:text-accent"
-              aria-hidden="true"
-            />
+            <span className="font-mono text-xs text-muted transition-colors group-hover:text-ink">
+              {t.label}
+            </span>
           </a>
         ))}
       </Reveal>
