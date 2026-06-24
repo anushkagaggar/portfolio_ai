@@ -27,7 +27,6 @@ import {
   SiApacheairflow,
   SiNextdotjs,
   SiTypescript,
-  SiLinux,
 } from "react-icons/si";
 import { Section, Chip } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
@@ -66,7 +65,7 @@ const ROWS: Tech[][] = [
     { name: "Ollama", Icon: SiOllama, color: "#000000" },
     { name: "Groq", wordmark: "groq", color: "#F04D22" },
     { name: "Qdrant", img: "/images/qdrant.png" },
-    { name: "AWS", mono: "AWS", color: "#FF9900" },
+    { name: "AWS", img: "/images/aws.png" },
     { name: "GCP", Icon: SiGooglecloud, color: "#4285F4" },
     { name: "Vercel", Icon: SiVercel, color: "#000000" },
   ],
@@ -86,7 +85,7 @@ const ROWS: Tech[][] = [
   [
     { name: "Next.js", Icon: SiNextdotjs, color: "#000000" },
     { name: "TypeScript", Icon: SiTypescript, color: "#3178C6" },
-    { name: "Linux", Icon: SiLinux, color: "#FCC624" },
+    { name: "Linux", img: "/images/linux.png" },
   ],
 ];
 

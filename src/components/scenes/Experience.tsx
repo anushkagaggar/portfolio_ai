@@ -10,14 +10,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Milestone = {
   period: string; title: string; org: string; location?: string;
-  points: string[]; tech?: string[]; highlight?: string;
+  points: string[]; tech?: string[];
 };
 
 const TECH_BY_ORG: Record<string, string[]> = {
   "Drona Pay": ["Apache Airflow", "Trino", "Iceberg", "SQL"],
   "IBM SkillsBuild": ["Python", "pandas", "NumPy", "scikit-learn"],
 };
-const HIGHLIGHT_BY_ORG: Record<string, string> = { "Drona Pay": "−50% storage" };
 
 const MILESTONES: Milestone[] = [
   {
@@ -26,7 +25,7 @@ const MILESTONES: Milestone[] = [
   },
   ...[...EXPERIENCE].reverse().map((r) => ({
     period: r.period, title: r.title, org: r.org, location: r.location,
-    points: r.points, tech: TECH_BY_ORG[r.org], highlight: HIGHLIGHT_BY_ORG[r.org],
+    points: r.points, tech: TECH_BY_ORG[r.org],
   })),
 ];
 
@@ -80,12 +79,7 @@ export function Experience() {
                 <span className="relative z-10 h-3.5 w-3.5 rounded-full border-2 border-accent bg-paper" />
               </div>
               <article className="rounded-xl border border-line bg-paper p-6">
-                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                  <p className="font-mono text-xs uppercase tracking-widest text-accent">{m.period}</p>
-                  {m.highlight ? (
-                    <span className="rounded-md bg-accent-soft px-2.5 py-1 font-mono text-xs text-accent">{m.highlight}</span>
-                  ) : null}
-                </div>
+                <p className="font-mono text-xs uppercase tracking-widest text-accent">{m.period}</p>
                 <h3 className="mt-2 font-grotesk text-xl font-medium text-ink">{m.title}</h3>
                 <p className="text-sm text-muted">{m.org}{m.location ? ` · ${m.location}` : ""}</p>
                 <ul className="mt-4 space-y-2 text-sm leading-relaxed text-ink/80">
