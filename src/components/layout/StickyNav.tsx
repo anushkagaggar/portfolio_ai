@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Github, Linkedin, FileText } from "lucide-react";
+import { Github, Linkedin, FileText, Mail } from "lucide-react";
 import type Lenis from "lenis";
 import { siteConfig, SCENES } from "@/config/site";
 
@@ -64,6 +64,15 @@ export function StickyNav() {
             className="grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:text-[#0A66C2]"
           >
             <Linkedin size={16} />
+          </a>
+          <a
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(siteConfig.email)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Email"
+            className="grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:text-[#EA4335]"
+          >
+            <Mail size={16} />
           </a>
           <a
             href={siteConfig.links.resume}
