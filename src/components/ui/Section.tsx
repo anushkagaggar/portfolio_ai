@@ -1,4 +1,4 @@
-import { Parallax } from "@/components/ui/Parallax";
+import { Reveal } from "@/components/ui/Reveal";
 
 /** Small pill for a skill / tech tag */
 export function Chip({ children }: { children: React.ReactNode }) {
@@ -23,7 +23,7 @@ export function Section({ id, title, intro, children }: SectionProps) {
       id={id}
       className="mx-auto flex min-h-screen max-w-5xl flex-col justify-center px-6 py-28 md:px-10"
     >
-      <Parallax distance={36}>
+      <Reveal>
         <h2 className="max-w-3xl font-grotesk text-3xl font-medium leading-tight tracking-tight text-ink md:text-5xl">
           {title}
         </h2>
@@ -32,7 +32,7 @@ export function Section({ id, title, intro, children }: SectionProps) {
             {intro}
           </p>
         ) : null}
-      </Parallax>
+      </Reveal>
       <div className="mt-12">{children}</div>
     </section>
   );

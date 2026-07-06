@@ -23,7 +23,7 @@ export function StickyNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const sections = SCENES.filter((s) => s.id !== "hero");
+  const sections = SCENES.filter((s) => s.id !== "hero" && s.id !== "vaultai");
 
   return (
     <header

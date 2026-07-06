@@ -140,7 +140,7 @@ export function TechStack() {
     <Section
       id="tech-stack"
       title="Tech stack."
-      intro="The toolkit I reach for across the lifecycle, from data pipelines to deployed, monitored GenAI systems. Hover any tool to see it in its true colours."
+      intro="The toolkit I reach for across the lifecycle, from data pipelines to deployed, monitored GenAI systems."
     >
       <Reveal stagger className="flex flex-col items-center gap-2.5">
         {ROWS.map((row, i) => (

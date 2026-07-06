@@ -32,6 +32,7 @@ export function Hero() {
       gsap.to("[data-hero='content']", {
         y: -160,
         opacity: 0,
+        filter: "blur(10px)",
         ease: "none",
         scrollTrigger: { trigger: node, start: "top top", end: "bottom top", scrub: true },
       });

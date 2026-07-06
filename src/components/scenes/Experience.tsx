@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Section, Chip } from "@/components/ui/Section";
+import { Reveal } from "@/components/ui/Reveal";
 import { EXPERIENCE, EDUCATION } from "@/data/experience";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -47,19 +48,9 @@ export function Experience() {
           scrollTrigger: { trigger: track, start: "top 65%", end: "bottom 75%", scrub: true, invalidateOnRefresh: true },
         }
       );
-      gsap.from("[data-milestone]", {
-        opacity: 0, y: 30, duration: 0.7, ease: "power3.out", stagger: 0.14, clearProps: "transform",
-        scrollTrigger: { trigger: track, start: "top 75%", once: true, invalidateOnRefresh: true },
-      });
     }, track);
 
-    const fb = window.setTimeout(() => {
-      if (track.getBoundingClientRect().top < window.innerHeight) {
-        gsap.set("[data-milestone]", { opacity: 1, clearProps: "transform" });
-      }
-    }, 1600);
-
-    return () => { window.clearTimeout(fb); ctx.revert(); };
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -72,7 +63,7 @@ export function Experience() {
         <span className="absolute left-[14px] top-2 bottom-2 w-px bg-line" aria-hidden="true" />
         <span ref={progressRef} className="absolute left-[14px] top-2 bottom-2 w-px origin-top bg-accent" aria-hidden="true" />
 
-        <div className="relative flex flex-col gap-10">
+        <Reveal stagger staggerAmount={0.1} className="relative flex flex-col gap-10">
           {MILESTONES.map((m, i) => (
             <div key={i} data-milestone className="grid grid-cols-[28px_1fr] gap-5">
               <div className="relative flex justify-center pt-1.5">
@@ -97,7 +88,7 @@ export function Experience() {
               </article>
             </div>
           ))}
-        </div>
+        </Reveal>
       </div>
     </Section>
   );

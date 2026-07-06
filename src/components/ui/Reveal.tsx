@@ -14,13 +14,17 @@ type RevealProps = {
   staggerAmount?: number;
 };
 
-/** Fades + rises content as it enters the viewport. */
+/**
+ * Scroll-driven motion: content drifts upward the whole time it's on screen,
+ * un-blurs + fades in as it enters from the bottom, and blurs + fades out as it
+ * leaves past the top. Everything is scrubbed to the scroll position, so it
+ * keeps moving with the scroll instead of just appearing once.
+ */
 export function Reveal({
   children,
   className,
-  delay = 0,
   stagger = false,
-  staggerAmount = 0.08,
+  staggerAmount = 0.06,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -30,43 +34,56 @@ export function Reveal({
     const targets = stagger
       ? (Array.from(node.children) as HTMLElement[])
       : node;
+    const stg = stagger ? staggerAmount : 0;
 
     let fb: number | undefined;
     const ctx = gsap.context(() => {
-      const tween = gsap.fromTo(
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: node,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // continuous upward drift the entire time it's in view
+      tl.fromTo(
         targets,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          delay,
-          ease: "power3.out",
-          stagger: stagger ? staggerAmount : 0,
-          clearProps: "transform",
-          scrollTrigger: {
-            trigger: node,
-            start: "top 88%",
-            once: true,
-            invalidateOnRefresh: true,
-          },
-        }
+        { y: 44 },
+        { y: -44, ease: "none", duration: 4 },
+        0
       );
-      // safety: if in view but the trigger never fired, show it anyway
+      // enter: fade + un-blur (first ~30%)
+      tl.fromTo(
+        targets,
+        { autoAlpha: 0, filter: "blur(10px)" },
+        { autoAlpha: 1, filter: "blur(0px)", ease: "power2.out", duration: 1.2, stagger: stg },
+        0
+      );
+      // exit: blur + fade out (last ~30%)
+      tl.to(
+        targets,
+        { autoAlpha: 0, filter: "blur(10px)", ease: "power2.in", duration: 1.2, stagger: stg },
+        2.8
+      );
+
+      // safety: if the trigger never initialised but content is on screen, show it
       fb = window.setTimeout(() => {
         const top = node.getBoundingClientRect().top;
-        if (top < window.innerHeight * 0.98 && tween.progress() === 0) {
-          tween.scrollTrigger?.kill();
-          gsap.set(targets, { opacity: 1, clearProps: "transform" });
+        if (top < window.innerHeight * 0.9 && tl.progress() === 0) {
+          tl.scrollTrigger?.kill();
+          gsap.set(targets, { autoAlpha: 1, filter: "blur(0px)", clearProps: "transform" });
         }
-      }, 1600);
+      }, 1800);
     }, node);
 
     return () => {
       if (fb) window.clearTimeout(fb);
       ctx.revert();
     };
-  }, [delay, stagger, staggerAmount]);
+  }, [stagger, staggerAmount]);
 
   return (
     <div ref={ref} className={className}>
