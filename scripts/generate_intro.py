@@ -1,6 +1,6 @@
 """
 Generate the intro voice ONCE, then commit public/audio/intro.mp3.
-The live website only plays that file — it never calls an API.
+The live website only plays that file; it never calls an API.
 
 Setup:
     pip install -r requirements.txt
@@ -30,7 +30,7 @@ api_key = os.getenv("GROQ_API_KEY")
 if not api_key:
     sys.exit("GROQ_API_KEY not found. Add it to your .env file (GROQ_API_KEY=gsk_...).")
 
-# Edit to taste — keep it to about two sentences. This is what the voice says.
+# Edit to taste, keep it to about two sentences. This is what the voice says.
 SCRIPT = "Hi, I'm Anushka Maheshwari. I engineer intelligent systems that turn data into decisions."
 
 OUTPUT = Path("public/audio/intro.mp3")

@@ -100,7 +100,7 @@ function Tile({ t }: { t: Tech }) {
   return (
     <div
       style={{ ["--brand" as string]: t.color ?? "var(--color-accent)" } as React.CSSProperties}
-      className="box-hover group relative flex h-[84px] w-[84px] flex-col items-center justify-center gap-2 rounded-xl border border-line bg-paper text-ink"
+      className="transition duration-200 hover:-translate-y-1 hover:scale-[1.03] hover:border-accent hover:shadow-[0_16px_36px_-16px_rgba(79,70,229,0.45)] group relative flex h-[84px] w-[84px] flex-col items-center justify-center gap-2 rounded-xl border border-line bg-paper text-ink"
     >
       {Icon ? (
         <Icon
@@ -140,7 +140,7 @@ export function TechStack() {
     <Section
       id="tech-stack"
       title="Tech stack."
-      intro="The toolkit I reach for across the lifecycle — from data pipelines to deployed, monitored GenAI systems. Hover any tool to see it in its true colours."
+      intro="The toolkit I reach for across the lifecycle, from data pipelines to deployed, monitored GenAI systems. Hover any tool to see it in its true colours."
     >
       <Reveal stagger className="flex flex-col items-center gap-2.5">
         {ROWS.map((row, i) => (

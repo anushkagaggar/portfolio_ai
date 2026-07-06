@@ -22,10 +22,10 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} — ${siteConfig.role}`,
+  title: `${siteConfig.name} · ${siteConfig.role}`,
   description: siteConfig.tagline,
   openGraph: {
-    title: `${siteConfig.name} — ${siteConfig.role}`,
+    title: `${siteConfig.name} · ${siteConfig.role}`,
     description: siteConfig.tagline,
     type: "website",
     // Drop a 1200x630 image at /public/images/og-image.png to enable rich link previews.
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.role}`,
+    title: `${siteConfig.name} · ${siteConfig.role}`,
     description: siteConfig.tagline,
   },
 };

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
-  Design system — "engineering blueprint"
+  Design system - "engineering blueprint"
   Warm paper, charcoal ink, faint schematic lines, one disciplined indigo accent.
   Type: Space Grotesk (display) / Inter (body) / JetBrains Mono (schematic labels).
 */
@@ -38,7 +38,7 @@
     scroll-margin-top: 72px;
   }
 
-  /* visible keyboard focus — part of the quality floor */
+  /* visible keyboard focus - part of the quality floor */
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
@@ -65,15 +65,4 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* Shared hover-enlarge for every card/box on the site (like the tech tiles). */
-.box-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  will-change: transform;
-}
-.box-hover:hover {
-  transform: translateY(-4px) scale(1.03);
-  border-color: var(--color-accent);
-  box-shadow: 0 16px 36px -16px rgba(79, 70, 229, 0.45);
 }

@@ -48,14 +48,14 @@ export function Experience() {
         }
       );
       gsap.from("[data-milestone]", {
-        opacity: 0, y: 30, duration: 0.7, ease: "power3.out", stagger: 0.14,
+        opacity: 0, y: 30, duration: 0.7, ease: "power3.out", stagger: 0.14, clearProps: "transform",
         scrollTrigger: { trigger: track, start: "top 75%", once: true, invalidateOnRefresh: true },
       });
     }, track);
 
     const fb = window.setTimeout(() => {
       if (track.getBoundingClientRect().top < window.innerHeight) {
-        gsap.set("[data-milestone]", { opacity: 1, y: 0 });
+        gsap.set("[data-milestone]", { opacity: 1, clearProps: "transform" });
       }
     }, 1600);
 
@@ -66,7 +66,7 @@ export function Experience() {
     <Section
       id="experience"
       title="The road so far."
-      intro="From an AI & ML degree into shipping production data systems — each stop built on the last."
+      intro="From an AI & ML degree into shipping production data systems, each stop built on the last."
     >
       <div ref={trackRef} className="relative">
         <span className="absolute left-[14px] top-2 bottom-2 w-px bg-line" aria-hidden="true" />
@@ -78,7 +78,7 @@ export function Experience() {
               <div className="relative flex justify-center pt-1.5">
                 <span className="relative z-10 h-3.5 w-3.5 rounded-full border-2 border-accent bg-paper" />
               </div>
-              <article className="box-hover rounded-xl border border-line bg-paper p-6">
+              <article className="transition duration-200 hover:-translate-y-1 hover:scale-[1.03] hover:border-accent hover:shadow-[0_16px_36px_-16px_rgba(79,70,229,0.45)] rounded-xl border border-line bg-paper p-6">
                 <p className="font-mono text-xs uppercase tracking-widest text-accent">{m.period}</p>
                 <h3 className="mt-2 font-grotesk text-xl font-medium text-ink">{m.title}</h3>
                 <p className="text-sm text-muted">{m.org}{m.location ? ` · ${m.location}` : ""}</p>

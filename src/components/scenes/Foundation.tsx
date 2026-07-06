@@ -8,13 +8,13 @@ export function Foundation() {
     <Section
       id="projects"
       title="More projects."
-      intro="Hands-on builds across computer vision and time-series — from preprocessing to a working model."
+      intro="Hands-on builds across computer vision and time-series, from preprocessing to a working model."
     >
       <Reveal stagger className="grid gap-5 md:grid-cols-2">
         {FOUNDATION_PROJECTS.map((p) => (
           <article
             key={p.title}
-            className="box-hover group rounded-xl border border-line bg-paper p-6"
+            className="transition duration-200 hover:-translate-y-1 hover:scale-[1.03] hover:border-accent hover:shadow-[0_16px_36px_-16px_rgba(79,70,229,0.45)] group rounded-xl border border-line bg-paper p-6"
           >
             <h3 className="font-grotesk text-xl font-medium text-ink">{p.title}</h3>
             <p className="mt-1 text-sm text-muted">{p.tagline}</p>

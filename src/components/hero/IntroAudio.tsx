@@ -35,7 +35,7 @@ function pickFemaleVoice(voices: SpeechSynthesisVoice[]) {
  * scripts/generate_intro.py) it plays that. If not, it falls back to the
  * browser's speech synthesis using a female voice. Browsers block sound until
  * the visitor interacts, so it tries shortly after load and otherwise fires on
- * the first interaction — reliably, on every reload.
+ * the first interaction - reliably, on every reload.
  */
 export function IntroAudio() {
   useEffect(() => {
@@ -83,7 +83,7 @@ export function IntroAudio() {
           done = true;
         })
         .catch(() => {
-          /* blocked — the first interaction below will start it */
+          /* blocked - the first interaction below will start it */
         });
     }, siteConfig.intro.autoplayDelayMs);
 

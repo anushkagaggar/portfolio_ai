@@ -1,5 +1,5 @@
 // ──────────────────────────────────────────────────────────────────────────
-// SITE CONFIG — the only file you need to edit for personal info & links.
+// SITE CONFIG - the only file you need to edit for personal info & links.
 // Everything (nav, hero, scenes, footer) reads from here.
 // ──────────────────────────────────────────────────────────────────────────
 
@@ -33,7 +33,7 @@ export const siteConfig = {
 
   intro: {
     // Generated once and stored (see scripts/generate_intro.py). The live site
-    // only plays this file — it never calls an API.
+    // only plays this file - it never calls an API.
     audioUrl: "/audio/intro.mp3",
     // How long after load before the voice attempts to play.
     autoplayDelayMs: 1500,

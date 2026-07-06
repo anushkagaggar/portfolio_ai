@@ -43,6 +43,7 @@ export function Reveal({
           delay,
           ease: "power3.out",
           stagger: stagger ? staggerAmount : 0,
+          clearProps: "transform",
           scrollTrigger: {
             trigger: node,
             start: "top 88%",
@@ -56,7 +57,7 @@ export function Reveal({
         const top = node.getBoundingClientRect().top;
         if (top < window.innerHeight * 0.98 && tween.progress() === 0) {
           tween.scrollTrigger?.kill();
-          gsap.set(targets, { opacity: 1, y: 0 });
+          gsap.set(targets, { opacity: 1, clearProps: "transform" });
         }
       }, 1600);
     }, node);

@@ -18,7 +18,7 @@ export function Contact() {
     const subject = `Portfolio enquiry${name.trim() ? ` from ${name.trim()}` : ""}`;
     const signoff =
       name.trim() || email.trim()
-        ? `\n\n— ${name.trim()}${email.trim() ? ` (${email.trim()})` : ""}`
+        ? `\n\nFrom ${name.trim()}${email.trim() ? ` (${email.trim()})` : ""}`
         : "";
     const body = `${message.trim()}${signoff}`;
     const url = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
@@ -52,7 +52,7 @@ export function Contact() {
       <Reveal className="mt-10 w-full max-w-xl">
         <form
           onSubmit={handleSubmit}
-          className="box-hover flex flex-col gap-4 rounded-2xl border border-line bg-paper p-6 md:p-8"
+          className="transition duration-200 hover:-translate-y-1 hover:scale-[1.03] hover:border-accent hover:shadow-[0_16px_36px_-16px_rgba(79,70,229,0.45)] flex flex-col gap-4 rounded-2xl border border-line bg-paper p-6 md:p-8"
         >
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block">
@@ -103,8 +103,8 @@ export function Contact() {
             aria-live="polite"
           >
             {sent
-              ? "Your message is ready in Gmail — just hit send. Looking forward to connecting!"
-              : "Looking forward to connecting — I'll get back to you soon."}
+              ? "Your message is ready in Gmail, just hit send. Looking forward to connecting!"
+              : "Looking forward to connecting. I'll get back to you soon."}
           </p>
         </form>
       </Reveal>

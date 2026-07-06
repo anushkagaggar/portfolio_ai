@@ -1,8 +1,8 @@
-# Anushka Maheshwari — Portfolio
+# Anushka Maheshwari - Portfolio
 
 A scroll-driven, white "engineering blueprint" portfolio. The hero is a living
 neural field that converges on load while the name resolves from blur to focus;
-the intro voice plays on its own. No backend — fully static and free to host.
+the intro voice plays on its own. No backend, fully static and free to host.
 
 Flow: **Hero** → **VaultAI** → **Experience** (a roadway timeline) →
 **Projects** → **Tech stack** (scrolling strip + categories) → **Contact**.
@@ -36,11 +36,11 @@ The voice plays a couple of seconds after load. It works in two layers:
 
 1. If `public/audio/intro.mp3` exists, it plays that high-quality Groq file.
 2. If that file is missing or autoplay is blocked, it falls back to the
-   browser's built-in speech speaking your tagline — so it's never silent.
+   browser's built-in speech speaking your tagline, so it's never silent.
 
 ### To get the good Groq voice (one time)
 
-Adding `GROQ_API_KEY` to `.env` is **not** enough on its own — the website never
+Adding `GROQ_API_KEY` to `.env` is **not** enough on its own; the website never
 calls Groq. You have to run the generator once to create the MP3:
 
 ```bash
@@ -51,7 +51,7 @@ python scripts/generate_intro.py         # writes public/audio/intro.mp3
 
 The script reads `.env` via `load_dotenv()`. The first time, accept the
 `playai-tts` model terms once at https://console.groq.com or the call errors.
-Commit the resulting MP3. `.env` is gitignored — never commit real keys.
+Commit the resulting MP3. `.env` is gitignored, never commit real keys.
 
 Browsers block sound until the visitor interacts, so if the first attempt is
 blocked the voice fires on the first mouse move / scroll / tap / key. No visible
