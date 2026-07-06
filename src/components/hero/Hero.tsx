@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { NeuralField } from "@/components/hero/NeuralField";
 import { IntroAudio } from "@/components/hero/IntroAudio";
 import { siteConfig } from "@/config/site";
 
@@ -29,15 +28,11 @@ export function Hero() {
         "-=0.8"
       );
 
+      // content lifts + blurs out as you scroll away (neural field is now global)
       gsap.to("[data-hero='content']", {
         y: -160,
         opacity: 0,
         filter: "blur(10px)",
-        ease: "none",
-        scrollTrigger: { trigger: node, start: "top top", end: "bottom top", scrub: true },
-      });
-      gsap.to("[data-hero='field']", {
-        y: 140,
         ease: "none",
         scrollTrigger: { trigger: node, start: "top top", end: "bottom top", scrub: true },
       });
@@ -51,11 +46,6 @@ export function Hero() {
       ref={ref}
       className="relative flex min-h-screen items-center overflow-hidden px-6 md:px-10"
     >
-      <div data-hero="field" className="absolute inset-0">
-        <div className="blueprint-grid pointer-events-none absolute inset-0" />
-        <NeuralField />
-      </div>
-
       <IntroAudio />
 
       <div data-hero="content" className="relative z-10 mx-auto w-full max-w-5xl">

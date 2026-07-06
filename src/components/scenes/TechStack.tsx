@@ -28,7 +28,7 @@ import {
   SiNextdotjs,
   SiTypescript,
 } from "react-icons/si";
-import { Section, Chip } from "@/components/ui/Section";
+import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 
 type Tech = {
@@ -89,12 +89,6 @@ const ROWS: Tech[][] = [
   ],
 ];
 
-const CONCEPTS = [
-  "ML", "Deep Learning", "Computer Vision", "NLP", "Generative AI", "Agentic AI",
-  "RAG", "Prompt Engineering", "Confidence Scoring", "Guardrail Validation",
-  "JWT Auth", "Async Programming", "ETL Pipelines", "Data Lake Optimization", "CI/CD",
-];
-
 function Tile({ t }: { t: Tech }) {
   const Icon = t.Icon;
   return (
@@ -150,17 +144,6 @@ export function TechStack() {
             ))}
           </div>
         ))}
-      </Reveal>
-
-      <Reveal className="mx-auto mt-12 max-w-3xl border-t border-line pt-8">
-        <p className="mb-4 text-center font-mono text-xs uppercase tracking-widest text-muted">
-          methods &amp; concepts
-        </p>
-        <div className="flex flex-wrap justify-center gap-1.5">
-          {CONCEPTS.map((c) => (
-            <Chip key={c}>{c}</Chip>
-          ))}
-        </div>
       </Reveal>
     </Section>
   );
