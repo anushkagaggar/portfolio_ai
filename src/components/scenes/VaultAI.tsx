@@ -35,12 +35,12 @@ export function VaultAI() {
 
       {/* the flow */}
       <Reveal>
-        <div className="mb-10 flex flex-col items-stretch gap-3 rounded-xl border border-line bg-paper p-5 sm:flex-row sm:items-center">
+        <div className="box-hover mb-10 flex flex-col items-stretch gap-3 rounded-xl border border-line bg-paper p-5 sm:flex-row sm:items-center">
           <FlowStep icon={<Upload size={16} />} title="Upload" sub="Financial data" />
           <FlowArrow />
           <FlowStep icon={<Database size={16} />} title="Qdrant" sub="User-isolated retrieval" />
           <FlowArrow />
-          <div className="flex flex-1 items-center justify-center rounded-lg border border-accent/30 bg-accent-soft px-4 py-3 text-center">
+          <div className="box-hover flex flex-1 items-center justify-center rounded-lg border border-accent/30 bg-accent-soft px-4 py-3 text-center">
             <span className="font-mono text-xs text-accent">
               Plan · Invest · Goal agents
             </span>
@@ -51,7 +51,7 @@ export function VaultAI() {
       {/* agents */}
       <Reveal stagger className="grid gap-5 md:grid-cols-3">
         {AGENTS.map((a) => (
-          <article key={a.name} className="rounded-xl border border-line bg-paper p-6">
+          <article key={a.name} className="box-hover rounded-xl border border-line bg-paper p-6">
             <h3 className="font-grotesk text-lg font-medium text-ink">{a.name}</h3>
             <p className="mt-1 font-mono text-xs text-accent">{a.role}</p>
             <p className="mt-3 text-sm leading-relaxed text-ink/80">{a.detail}</p>
@@ -78,7 +78,7 @@ export function VaultAI() {
         </p>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
           {VAULTAI_STACK.map((s) => (
-            <div key={s.layer} className="rounded-lg border border-line bg-paper px-4 py-3">
+            <div key={s.layer} className="box-hover rounded-lg border border-line bg-paper px-4 py-3">
               <p className="font-mono text-[10px] uppercase tracking-wider text-muted">
                 {s.layer}
               </p>
@@ -101,7 +101,7 @@ function FlowStep({
   sub: string;
 }) {
   return (
-    <div className="flex flex-1 items-center gap-3 rounded-lg border border-line bg-paper-2 px-4 py-3">
+    <div className="box-hover flex flex-1 items-center gap-3 rounded-lg border border-line bg-paper-2 px-4 py-3">
       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-paper text-ink">
         {icon}
       </span>
@@ -124,7 +124,7 @@ function FlowArrow() {
 
 function Highlight({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-xl border border-line bg-paper p-5">
+    <div className="box-hover rounded-xl border border-line bg-paper p-5">
       <h4 className="font-grotesk text-base font-medium text-ink">{title}</h4>
       <p className="mt-2 text-sm leading-relaxed text-muted">{body}</p>
     </div>

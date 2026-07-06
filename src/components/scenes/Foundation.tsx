@@ -14,7 +14,7 @@ export function Foundation() {
         {FOUNDATION_PROJECTS.map((p) => (
           <article
             key={p.title}
-            className="group rounded-xl border border-line bg-paper p-6 transition-colors hover:border-ink/30"
+            className="box-hover group rounded-xl border border-line bg-paper p-6"
           >
             <h3 className="font-grotesk text-xl font-medium text-ink">{p.title}</h3>
             <p className="mt-1 text-sm text-muted">{p.tagline}</p>

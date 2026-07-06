@@ -52,7 +52,7 @@ export function Contact() {
       <Reveal className="mt-10 w-full max-w-xl">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-4 rounded-2xl border border-line bg-paper p-6 md:p-8"
+          className="box-hover flex flex-col gap-4 rounded-2xl border border-line bg-paper p-6 md:p-8"
         >
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block">

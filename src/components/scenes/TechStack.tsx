@@ -100,7 +100,7 @@ function Tile({ t }: { t: Tech }) {
   return (
     <div
       style={{ ["--brand" as string]: t.color ?? "var(--color-accent)" } as React.CSSProperties}
-      className="group relative flex h-[84px] w-[84px] flex-col items-center justify-center gap-2 rounded-xl border border-line bg-paper text-ink transition duration-200 hover:-translate-y-1 hover:border-accent hover:shadow-[0_10px_30px_-14px_rgba(79,70,229,0.45)]"
+      className="box-hover group relative flex h-[84px] w-[84px] flex-col items-center justify-center gap-2 rounded-xl border border-line bg-paper text-ink"
     >
       {Icon ? (
         <Icon

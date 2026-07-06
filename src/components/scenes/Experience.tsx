@@ -78,7 +78,7 @@ export function Experience() {
               <div className="relative flex justify-center pt-1.5">
                 <span className="relative z-10 h-3.5 w-3.5 rounded-full border-2 border-accent bg-paper" />
               </div>
-              <article className="rounded-xl border border-line bg-paper p-6">
+              <article className="box-hover rounded-xl border border-line bg-paper p-6">
                 <p className="font-mono text-xs uppercase tracking-widest text-accent">{m.period}</p>
                 <h3 className="mt-2 font-grotesk text-xl font-medium text-ink">{m.title}</h3>
                 <p className="text-sm text-muted">{m.org}{m.location ? ` · ${m.location}` : ""}</p>

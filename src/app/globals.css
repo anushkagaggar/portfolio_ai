@@ -66,3 +66,14 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Shared hover-enlarge for every card/box on the site (like the tech tiles). */
+.box-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  will-change: transform;
+}
+.box-hover:hover {
+  transform: translateY(-4px) scale(1.03);
+  border-color: var(--color-accent);
+  box-shadow: 0 16px 36px -16px rgba(79, 70, 229, 0.45);
+}
