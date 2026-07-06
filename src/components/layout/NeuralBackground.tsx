@@ -10,7 +10,6 @@ import { NeuralField } from "@/components/hero/NeuralField";
 export function NeuralBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10" aria-hidden="true">
-      <div className="blueprint-grid absolute inset-0" />
       <NeuralField />
     </div>
   );

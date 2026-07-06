@@ -44,8 +44,7 @@ export function Contact() {
           Let&apos;s build something intelligent.
         </h2>
         <p className="mt-5 max-w-xl text-base leading-relaxed text-muted md:text-lg">
-          Have a role, a project, or just an idea? Drop me a message and it lands
-          straight in my inbox.
+          Have a role, a project, or just an idea? Drop me a message.
         </p>
       </Reveal>
 
