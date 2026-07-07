@@ -1,5 +1,6 @@
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import { NeuralBackground } from "@/components/layout/NeuralBackground";
+import { RobotIntro } from "@/components/layout/RobotIntro";
 import { StickyNav } from "@/components/layout/StickyNav";
 import { Hero } from "@/components/hero/Hero";
 import { VaultAI } from "@/components/scenes/VaultAI";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <SmoothScroll>
       <NeuralBackground />
+      <RobotIntro />
       <StickyNav />
       <main>
         <Hero />

@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { IntroAudio } from "@/components/hero/IntroAudio";
 import { siteConfig } from "@/config/site";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -46,8 +45,6 @@ export function Hero() {
       ref={ref}
       className="relative flex min-h-screen items-center overflow-hidden px-6 md:px-10"
     >
-      <IntroAudio />
-
       <div data-hero="content" className="relative z-10 mx-auto w-full max-w-5xl">
         <h1
           data-hero="name"

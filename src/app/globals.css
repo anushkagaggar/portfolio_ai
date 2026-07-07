@@ -66,3 +66,19 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Robot assistant animations (intro overlay + corner assistant) */
+@keyframes robotBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+.robot-bob { animation: robotBob 3.2s ease-in-out infinite; }
+
+@keyframes robotWave { 0%, 68%, 100% { transform: rotate(0deg); } 80% { transform: rotate(-17deg); } 90% { transform: rotate(-5deg); } }
+.robot-wave { animation: robotWave 4.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 12%; }
+
+@keyframes robotBlink { 0%, 90%, 100% { transform: scaleY(1); } 94% { transform: scaleY(0.12); } }
+.robot-eyes { animation: robotBlink 5.5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+
+@keyframes robotCore { 0%, 100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.25); opacity: 1; } }
+.robot-core { animation: robotCore 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+
+@keyframes robotGlow { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+.robot-glow { animation: robotGlow 2.4s ease-in-out infinite; }
