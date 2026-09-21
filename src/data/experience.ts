@@ -8,6 +8,15 @@ export type Role = {
 
 export const EXPERIENCE: Role[] = [
   {
+    title: "AI Associate Engineer",
+    org: "AGITO Global",
+    period: "Jul 2026 – Present",
+    location: "Remote",
+    points: [
+      "Helped the team build AI-assisted solutions, supporting design, development, and deployment initiatives",
+    ],
+  },
+  {
     title: "Data Engineer Intern",
     org: "Drona Pay",
     period: "Aug 2025 – Jan 2026",
