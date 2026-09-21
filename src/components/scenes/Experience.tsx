@@ -15,6 +15,7 @@ type Milestone = {
 };
 
 const TECH_BY_ORG: Record<string, string[]> = {
+  "AGITO Global": ["Generative AI", "LLM Integration", "RAG", "Prompt Engineering"],
   "Drona Pay": ["Apache Airflow", "Trino", "Iceberg", "SQL"],
   "IBM SkillsBuild": ["Python", "pandas", "NumPy", "scikit-learn"],
 };
@@ -57,7 +58,7 @@ export function Experience() {
     <Section
       id="experience"
       title="The road so far."
-      intro="From an AI & ML degree into shipping production data systems, each stop built on the last."
+      intro="From an AI & ML degree into shipping production data systems and AI-assisted solutions, each stop built on the last."
     >
       <div ref={trackRef} className="relative">
         <span className="absolute left-[14px] top-2 bottom-2 w-px bg-line" aria-hidden="true" />
