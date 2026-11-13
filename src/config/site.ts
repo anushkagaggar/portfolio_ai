@@ -18,7 +18,7 @@ export const siteConfig = {
     github: "https://github.com/anushkagaggar",
     linkedin: "https://www.linkedin.com/in/anushka-maheshwari-6a4ab7269/",
     resume:
-      "https://drive.google.com/file/d/1TJLwKOvyXTsNDMS21MTPYEBrYDH8Eu3h/view?usp=sharing",
+      "https://drive.google.com/file/d/1SI7VxHCE6prjezW7zmkaq5_1t3F0Cupw/view?usp=drive_link",
 
     // project links
     vaultaiRepo: "https://github.com/anushkagaggar/vaultai",

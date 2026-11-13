@@ -10,10 +10,12 @@ export const EXPERIENCE: Role[] = [
   {
     title: "AI Associate Engineer",
     org: "AGITO Global",
-    period: "May 2026 – Present",
+    period: "May 2026 – Oct 2026",
     location: "Remote",
     points: [
-      "Helped the team build AI-assisted solutions, supporting design, development, and deployment initiatives",
+      "Developed a Windows-based ADO Release Notes Automation tool",
+      "Enabled AI adoption through Claude configuration and technical guidance",
+      "Collaborated with teams across Canada and the UK",
     ],
   },
   {
